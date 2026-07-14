@@ -4,11 +4,13 @@ from datetime import datetime
 import sys
 import json
 
+# 1) ВАРИАНТ ПОДКЛЮЧЕНИЕ ЧЕРЕЗ ОБЛАКО https://api.cloudamqp.com/console/d5b0eae4-bc26-4d0f-b88a-1a846f070923/details ( RabbitMQ manager https://cow.rmq2.cloudamqp.com/#/)
+# parameters = pika.URLParameters('amqps://eohqpuez:DhXio2-yLN1NNxcTcynpeR_eYBRaRkOC@cow.rmq2.cloudamqp.com/eohqpuez')
+# connection = pika.BlockingConnection(parameters)
 
-parameters = pika.URLParameters('amqps://eohqpuez:DhXio2-yLN1NNxcTcynpeR_eYBRaRkOC@cow.rmq2.cloudamqp.com/eohqpuez')
-connection = pika.BlockingConnection(parameters)
-
-
+# 2) ВАРИАНТ ПОДКЛЮЧЕНИЕ ЧЕРЕЗ ЛОКАЛЬНЫЙ СЕРВЕР (RabbitMQ manager http://localhost:15672/#/)
+credentials = pika.PlainCredentials('guest', 'guest')
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672, credentials=credentials))
 channel = connection.channel()
 
 channel.exchange_declare(exchange='task_mock', exchange_type='direct')

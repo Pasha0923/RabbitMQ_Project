@@ -2,9 +2,10 @@ import pika
 
 import time
 import json
-
-parameters = pika.URLParameters('amqps://eohqpuez:DhXio2-yLN1NNxcTcynpeR_eYBRaRkOC@cow.rmq2.cloudamqp.com/eohqpuez')
-connection = pika.BlockingConnection(parameters)
+credentials = pika.PlainCredentials('guest', 'guest')
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672, credentials=credentials))
+# parameters = pika.URLParameters('amqps://eohqpuez:DhXio2-yLN1NNxcTcynpeR_eYBRaRkOC@cow.rmq2.cloudamqp.com/eohqpuez')
+# connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
 channel.queue_declare(queue='task_queue', durable=True)
